@@ -1,118 +1,24 @@
-
-METHOD_TRANSLATIONS = {
-  προσπάθεια_μετατροπής: :try_convert,
-  διανέμω: :allocate,
-  νέο: :new,
-  υπερκλάση: :superclass,
-  πάγωμα: :freeze,
-  # to_s: :to_s,
-  επιθεώρηση: :inspect,
-  # included_modules: :included_modules,
-  συμπεριλαμβάνεί?: :include?,
-  όνομα: :name,
-  πρόγονοι: :ancestors,
-  # instance_methods: :instance_methods,
-#   public_instance_methods: :public_instance_methods,
-#   protected_instance_methods: :protected_instance_methods,
-#   private_instance_methods: :private_instance_methods,
-#   constants: :constants,
-#   const_get: :const_get,
-#   const_set: :const_set,
-#   const_defined?: :const_defined?,
-#   const_missing: :const_missing,
-#   class_variables: :class_variables,
-#   remove_class_variable: :remove_class_variable,
-#   class_variable_get: :class_variable_get,
-#   class_variable_set: :class_variable_set,
-#   class_variable_defined?: :class_variable_defined?,
-#   public_constant: :public_constant,
-#   private_constant: :private_constant,
-#   singleton_class?: :singleton_class?,
-  # include: :include,
-  # prepend: :prepend,
-  # module_exec: :module_exec,
-  # class_exec: :class_exec,
-  # module_eval: :module_eval,
-  # class_eval: :class_eval,
-  # method_defined?: :method_defined?,
-  # public_method_defined?: :public_method_defined?,
-  # private_method_defined?: :private_method_defined?,
-  # protected_method_defined?: :protected_method_defined?,
-  # public_class_method: :public_class_method,
-  # private_class_method: :private_class_method,
-  φόρτωμα: :autoload,
-  φόρτωσε?: :autoload?,
-  # instance_method: :instance_method,
-#   public_instance_method: :public_instance_method,
-#   pretty_print_cycle: :pretty_print_cycle,
-#   pretty_print: :pretty_print,
-#   pretty_print_instance_variables: :pretty_print_instance_variables,
-#   pretty_print_inspect: :pretty_print_inspect,
-#   nil?: :nil?,
-#   eql?: :eql?,
-#   hash: :hash,
-  κλάση: :class,
-  # singleton_class: :singleton_class,
-  κλώνος: :clone,
-  # dup: :dup,
-  # taint: :taint,
-  # tainted?: :tainted?,
-  # untaint: :untaint,
-  # untrust: :untrust,
-  # untrusted?: :untrusted?,
-  # trust: :trust,
-  # frozen?: :frozen?,
-  μέθοδοι: :methods,
-  # singleton_methods: :singleton_methods,
-  # protected_methods: :protected_methods,
-  # private_methods: :private_methods,
-  # public_methods: :public_methods,
-  # instance_variables: :instance_variables,
-  # instance_variable_get: :instance_variable_get,
-  # instance_variable_set: :instance_variable_set,
-  # instance_variable_defined?: :instance_variable_defined?,
-  # remove_instance_variable: :remove_instance_variable,
-  # instance_of?: :instance_of?,
-  # kind_of?: :kind_of?,
-  είναι?: :is_a?,
-  # tap: :tap,
-  αποστολή: :send,
-  # public_send: :public_send,
-  ανταποκρίνεται_στό?: :respond_to?,
-  επεκτείνει: :extend,
-  απεικόνιση: :display,
-  μέθοδος: :method,
-  # public_method: :public_method,
-  # singleton_method: :singleton_method,
-  # define_singleton_method: :define_singleton_method,
-  # object_id: :object_id,
-  # to_enum: :to_enum,
-  # enum_for: :enum_for,
-  # pretty_inspect: :pretty_inspect,
-  # equal?: :equal?,
-  # instance_eval: :instance_eval,
-  # instance_exec: :instance_exec,
-  # __send__: :__send__,
-  # __id__: :__id__
-}
+require './methods'
 
 
-
-Object.constants.map {|klass|
-  klass = Object.const_get klass
-  
-  METHOD_TRANSLATIONS.map{|k, v| 
-    # if  klass.respond_to? v and
-    #     klass.respond_to? :singleton_class and
-    #     klass.respond_to? :alias_method and
-    #     !klass.frozen?
-    klass.singleton_class.send(:alias_method, k, v) if klass.class.respond_to? v
-    klass.send(:alias_method, k, v) if klass.respond_to? v
-    # end  
-  }
+Object.constants.map {|name|
+  klass = Object.const_get(name)
+  apply_alias_to klass if klass
 }
  
+apply_alias_to Object
 
+def apply_alias_to klass
+  Methods.collect_translated.map{|k, v| 
+    next if klass.frozen?
+    k, v = k.to_sym, v.to_sym
+    begin
+      klass.singleton_class.send(:alias_method, k, v) if klass.class.respond_to? v
+      klass.send(:alias_method, k, v) if klass.respond_to? v
+    rescue Exception
+    end
+  }  
+end
 
 Αντικείμενο =  Object
 Μονάδα = Module
