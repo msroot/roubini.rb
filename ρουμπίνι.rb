@@ -125,14 +125,3 @@ end
 # RubyToken
 # RubyLex
 # Readline
-
- 
-
-def methods_to_translate
-  Object.constants.reduce([]) {|memo, klass|
-    klass = Object.const_get klass
-    memo << klass.methods - METHOD_TRANSLATIONS.keys
-    memo << klass.instance_methods - METHOD_TRANSLATIONS.keys if klass.respond_to? :instance_methods
-    memo
-  }.flatten.uniq.sort
-end
