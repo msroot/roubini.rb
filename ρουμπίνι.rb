@@ -102,16 +102,18 @@ Object.constants.map {|_klass|
   METHOD_TRANSLATIONS.map{|k, v| 
     klass = Object.const_get _klass
     
-  if  klass.respond_to? v and
-      klass.respond_to? :singleton_class and
-      klass.respond_to? :alias_method and
-      !klass.frozen?
+  # if  klass.respond_to? v and
+  #     klass.respond_to? :singleton_class and
+  #     klass.respond_to? :alias_method and
+  #     !klass.frozen?
       
-      klass.singleton_class.send(:alias_method, k, v) 
-    end  
+      klass.singleton_class.send(:alias_method, k, v) if klass.class.respond_to? v
+      klass.send(:alias_method, k, v) if klass.respond_to? v
+    # end  
   }
 }
  
+
 
 Αντικείμενο =  Object
 Μονάδα = Module
@@ -229,28 +231,3 @@ def methods_to_translate
     memo
   }.uniq
 end
-
-# --------------------------------------------------------------------
-# Usage:
-# --------------------------------------------------------------------
-
-# 2.1.3 :116 > Μίγμα.νέο
-#  => {}
-
-# 2.1.3 :117 > Αριθμητικό.νέο
-#  => #<Numeric:0x007f8f53e9e960>
-
-# 2.1.3 :118 > Σειρά.νέο
-#  => ""
-
-# 2.1.3 :119 > Κλάση.νέο
-#  => #<Class:0x007f8f53e86fb8>
-
-# 2.1.3 :120 > Παράταξη.νέο
-#  => []
-#
-# 2.1.3 :121 > Μίγμα.επιθεώρηση
-#  => "Hash"
-
-# 2.1.3 :122 > Μίγμα.πρόγονοι
- # => [Hash, Enumerable, Object, Kernel, BasicObject]
