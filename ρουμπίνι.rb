@@ -98,17 +98,16 @@ METHOD_TRANSLATIONS = {
 
 
 
-Object.constants.map {|_klass|
+Object.constants.map {|klass|
+  klass = Object.const_get klass
+  
   METHOD_TRANSLATIONS.map{|k, v| 
-    klass = Object.const_get _klass
-    
-  # if  klass.respond_to? v and
-  #     klass.respond_to? :singleton_class and
-  #     klass.respond_to? :alias_method and
-  #     !klass.frozen?
-      
-      klass.singleton_class.send(:alias_method, k, v) if klass.class.respond_to? v
-      klass.send(:alias_method, k, v) if klass.respond_to? v
+    # if  klass.respond_to? v and
+    #     klass.respond_to? :singleton_class and
+    #     klass.respond_to? :alias_method and
+    #     !klass.frozen?
+    klass.singleton_class.send(:alias_method, k, v) if klass.class.respond_to? v
+    klass.send(:alias_method, k, v) if klass.respond_to? v
     # end  
   }
 }
