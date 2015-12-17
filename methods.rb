@@ -1012,7 +1012,7 @@ class Methods
 
 
   def self.collect_translated
-   COLLECTION.keep_if {|key,value| key != value }
+   @collect_translated ||= COLLECTION.keep_if {|key,value| key != value }
   end
 
   def build_methods
@@ -1023,6 +1023,5 @@ class Methods
       memo
     }.flatten.compact.uniq.sort.map(&:to_s).map{|k| [k, k]}.to_h  
   end
-
 
 end
