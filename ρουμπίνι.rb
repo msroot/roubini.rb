@@ -28,18 +28,17 @@ require './methods'
 
 
 Object.constants.map {|name|
-  klass = Object.const_get(name)
-  apply_alias_to klass if klass
+  klass = Object.const_get(name) rescue false
+  apply_alias_to klass if klass and not klass.frozen?
 }
  
 def apply_alias_to klass
   Methods.collect_translated.map{|k, v| 
-    next if klass.frozen?
     k, v = k.to_sym, v.to_sym
     begin
       klass.singleton_class.send(:alias_method, k, v) if klass.class.respond_to? v
       klass.send(:alias_method, k, v) if klass.respond_to? v
-    rescue Exception
+    rescue Exception 
     end
   }  
 end

@@ -1,3 +1,48 @@
+TRANSLATIONS = {
+"class" => "κλάση",
+"module" => "μονάδα",
+"def" => "ορισμός",
+"undef" => "ανορισμός",
+"begin" => "αρχή",
+"rescue" => "διάσωση",
+"ensure" => "εξασφάλισε",
+"end" => "τέλος",
+"if" => "άν",
+"unless" => "εκτός",
+"then" => "τότε",
+"elsif" => "αλλιώς_άν",
+"else" => "αλλιώς",
+"case" => "υπόθεση",
+"when" => "όταν",
+"while" => "εώς",
+"until" => "μέχρι",
+"for" => "γιά",
+"break" => "διακοπή",
+"next" => "επόμενο",
+"redo" => "ξανακάνε",
+"retry" => "ξαναδοκίμασε",
+"in" => "εντός",
+"do" => "κάνε",
+"return" => "επεστρέψε",
+"yield" => "απέδωσε",
+"super" => "σούπερ",
+"self" => "ίδιος",
+"nil" => "τίποτα",
+"true" => "αληθής",
+"false" => "ψευδής",
+"and" => "κάι",
+"or" => "ή",
+"not" => "μη",
+"alias" => "ψευδώνυμο",
+"defined" => "ορίστηκε",
+"BEGIN" => "ΑΡΧΗ",
+"END" => "ΤΕΛΟΣ",
+"__LINE__" => "__ΓΡΑΜΜΗ__",
+"__FILE__" => "__ΑΡΧΕΊΟ__"
+}
+
+
+
 #
 #   irb/ruby-token.rb - ruby tokens
 #   	$Release Version: 0.9.6$
@@ -269,4 +314,8 @@ end
 
 
 
-# RubyToken.constants
+
+
+
+[:TkDEF, RubyToken::TkId, "def", :EXPR_FNAME]
+RubyToken.const_defined?(:TkDEF)
