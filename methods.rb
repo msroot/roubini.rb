@@ -1,27 +1,5 @@
 class Methods
   COLLECTION ={
-    "!" => "!",
-    "!=" => "!=",
-    "!~" => "!~",
-    "%" => "%",
-    "&" => "&",
-    "*" => "*",
-    "**" => "**",
-    "+" => "+",
-    "+@" => "+@",
-    "-" => "-",
-    "-@" => "-@",
-    "/" => "/",
-    "<" => "<",
-    "<<" => "<<",
-    "<=" => "<=",
-    "< => " => "< => ",
-    "==" => "==",
-    "===" => "===",
-    "=~" => "=~",
-    ">" => ">",
-    ">=" => ">=",
-    ">>" => ">>",
     "Array" => "Array",
     "Complex" => "Complex",
     "CurrentContext" => "CurrentContext",
@@ -34,9 +12,6 @@ class Methods
     "Rational" => "Rational",
     "String" => "String",
     "Token" => "Token",
-    "[]" => "[]",
-    "[]=" => "[]=",
-    "^" => "^",
     "__callee__" => "__callee__",
     "__dir__" => "__dir__",
     "__id__" => "__id__",
@@ -46,7 +21,6 @@ class Methods
     "_id2ref" => "_id2ref",
     "_load" => "_load",
     "_warn_" => "_warn_",
-    "`" => "`",
     "abort" => "abort",
     "abort_on_exception" => "abort_on_exception",
     "abort_on_exception=" => "abort_on_exception=",
@@ -1033,9 +1007,7 @@ class Methods
     "yield" => "yield",
     "zero?" => "zero?",
     "zip" => "zip",
-    "zone" => "zone",
-    "|" => "|",
-    "~" => "~"
+    "zone" => "zone"
   }
 
 
