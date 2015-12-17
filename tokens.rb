@@ -311,11 +311,3 @@ module RubyToken
   end
 end
 # :startdoc:
-
-
-
-
-
-
-[:TkDEF, RubyToken::TkId, "def", :EXPR_FNAME]
-RubyToken.const_defined?(:TkDEF)
