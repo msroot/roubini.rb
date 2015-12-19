@@ -122,7 +122,7 @@ module RubyToken
 
   def Token(token, value = nil)
     # Translations
-    value = TRANSLATIONS[value] if !TRANSLATIONS[value].nil?
+    # value = TRANSLATIONS[value] if !TRANSLATIONS[value].nil?
     
     case token
     when String
