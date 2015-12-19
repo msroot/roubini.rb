@@ -1,48 +1,3 @@
-TRANSLATIONS = {
-"class" => "κλάση",
-"module" => "μονάδα",
-"def" => "ορισμός",
-"undef" => "ανορισμός",
-"begin" => "αρχή",
-"rescue" => "διάσωση",
-"ensure" => "εξασφάλισε",
-"end" => "τέλος",
-"if" => "άν",
-"unless" => "εκτός",
-"then" => "τότε",
-"elsif" => "αλλιώς_άν",
-"else" => "αλλιώς",
-"case" => "υπόθεση",
-"when" => "όταν",
-"while" => "εώς",
-"until" => "μέχρι",
-"for" => "γιά",
-"break" => "διακοπή",
-"next" => "επόμενο",
-"redo" => "ξανακάνε",
-"retry" => "ξαναδοκίμασε",
-"in" => "εντός",
-"do" => "κάνε",
-"return" => "επεστρέψε",
-"yield" => "απέδωσε",
-"super" => "σούπερ",
-"self" => "ίδιος",
-"nil" => "τίποτα",
-"true" => "αληθής",
-"false" => "ψευδής",
-"and" => "κάι",
-"or" => "ή",
-"not" => "μη",
-"alias" => "ψευδώνυμο",
-"defined" => "ορίστηκε",
-"BEGIN" => "ΑΡΧΗ",
-"END" => "ΤΕΛΟΣ",
-"__LINE__" => "__ΓΡΑΜΜΗ__",
-"__FILE__" => "__ΑΡΧΕΊΟ__"
-}
-
-
-
 #
 #   irb/ruby-token.rb - ruby tokens
 #   	$Release Version: 0.9.6$
@@ -62,6 +17,52 @@ module RubyToken
   EXPR_FNAME = :EXPR_FNAME
   EXPR_DOT = :EXPR_DOT
   EXPR_CLASS = :EXPR_CLASS
+  
+  
+  
+  TRANSLATIONS = {
+  "κλάση" => "class",
+  "μονάδα" => "module",
+  "ορισμός" => "def",
+  "ανορισμός" => "undef",
+  "αρχή" => "begin",
+  "διάσωση" => "rescue",
+  "εξασφάλισε" => "ensure",
+  "τέλος" => "end",
+  "άν" => "if",
+  "εκτός" => "unless",
+  "τότε" => "then",
+  "αλλιώς_άν" => "elsif",
+  "αλλιώς" => "else",
+  "υπόθεση" => "case",
+  "όταν" => "when",
+  "εώς" => "while",
+  "μέχρι" => "until",
+  "γιά" => "for",
+  "διακοπή" => "break",
+  "επόμενο" => "next",
+  "ξανακάνε" => "redo",
+  "ξαναδοκίμασε" => "retry",
+  "εντός" => "in",
+  "κάνε" => "do",
+  "επεστρέψε" => "return",
+  "απέδωσε" => "yield",
+  "σούπερ" => "super",
+  "ίδιος" => "self",
+  "τίποτα" => "nil",
+  "αληθής" => "true",
+  "ψευδής" => "false",
+  "κάι" => "and",
+  "ή" => "or",
+  "μη" => "not",
+  "ψευδώνυμο" => "alias",
+  "ορίστηκε" => "defined",
+  "ΑΡΧΗ" => "BEGIN",
+  "ΤΕΛΟΣ" => "END",
+  "__ΓΡΑΜΜΗ__" => "__LINE__",
+  "__ΑΡΧΕΙΟ__" => "__FILE__"
+  }
+  
 
   class Token
     def initialize(seek, line_no, char_no)
@@ -120,6 +121,9 @@ module RubyToken
   end
 
   def Token(token, value = nil)
+    # Translations
+    value = TRANSLATIONS[value] if !TRANSLATIONS[value].nil?
+    
     case token
     when String
       if (tk = TkReading2Token[token]).nil?
@@ -297,8 +301,7 @@ module RubyToken
 	IRB.fail TkReading2TokenDuplicateError, token_n, reading
       end
       if opts.empty?
-	TkReading2Token[reading] = [token_c
-  ]
+	TkReading2Token[reading] = [token_c]
       else
 	TkReading2Token[reading] = [token_c].concat(opts)
       end
